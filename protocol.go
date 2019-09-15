@@ -4,6 +4,10 @@ package gocec
 #include <libcec/cecc.h>
 */
 import "C"
+import (
+	"fmt"
+	"strings"
+)
 
 var toString *C.char
 
@@ -39,6 +43,16 @@ func (address LogicalAddress) String() string {
 	C.libcec_logical_address_to_string(C.cec_logical_address(address), toString, toStringSize)
 
 	return C.GoString(toString)
+}
+
+type PhysicalAddress [2]byte
+
+func (address PhysicalAddress) String() string {
+	builder := strings.Builder{}
+
+	fmt.Fprintf(&builder, "%d.%d.%d.%d", (address[0] >> 4) & 0xF, address[0] & 0x0F, address[1] >> 4, address[1] & 0x0F)
+
+	return builder.String()
 }
 
 type Opcode byte

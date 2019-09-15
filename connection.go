@@ -70,6 +70,11 @@ func (conn *Connection) GetPowerStatus(address LogicalAddress) PowerStatus {
 	return PowerStatus(C.libcec_get_device_power_status(conn.connection, C.cec_logical_address(address)))
 }
 
+func (conn *Connection) GetPhysicalAddress(address LogicalAddress) PhysicalAddress {
+	physical := C.libcec_get_device_physical_address(conn.connection, C.cec_logical_address(address))
+	return PhysicalAddress{byte(physical >> 8), byte(physical & 0xFF)}
+}
+
 func (conn *Connection) Transmit(message Message) {
 	var command C.cec_command
 
