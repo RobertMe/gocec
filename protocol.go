@@ -17,6 +17,7 @@ func init() {
 	toString = (*C.char)(C.malloc(toStringSize))
 }
 
+//region Logical address
 type LogicalAddress byte
 
 const (
@@ -44,7 +45,9 @@ func (address LogicalAddress) String() string {
 
 	return C.GoString(toString)
 }
+//endregion
 
+//region Physical address
 type PhysicalAddress [2]byte
 
 func (address PhysicalAddress) String() string {
@@ -55,6 +58,7 @@ func (address PhysicalAddress) String() string {
 	return builder.String()
 }
 
+//region Opcode
 type Opcode byte
 
 const (
@@ -135,7 +139,9 @@ func (opcode Opcode) String() string {
 
 	return C.GoString(toString)
 }
+//endregion
 
+//region Power status
 type PowerStatus byte
 
 const (
@@ -151,3 +157,45 @@ func (status PowerStatus) String() string {
 
 	return C.GoString(toString)
 }
+//endregion
+
+//region Vendor id
+type Vendor uint
+
+const (
+	VendorToshiba       Vendor = 0x000039
+	VendorSamsung       Vendor = 0x0000F0
+	VendorDenon         Vendor = 0x0005CD
+	VendorMarantz       Vendor = 0x000678
+	VendorLoewe         Vendor = 0x000982
+	VendorOnkyo         Vendor = 0x0009B0
+	VendorMedion        Vendor = 0x000CB8
+	VendorToshiba2      Vendor = 0x000CE7
+	VendorPulseEight    Vendor = 0x001582
+	VendorHarmanKardon2 Vendor = 0x001950
+	VendorGoogle        Vendor = 0x001A11
+	VendorAkai          Vendor = 0x0020C7
+	VendorAoc           Vendor = 0x002467
+	VendorPanasonic     Vendor = 0x008045
+	VendorPhilips       Vendor = 0x00903E
+	VendorDaewoo        Vendor = 0x009053
+	VendorYamaha        Vendor = 0x00A0DE
+	VendorGrundig       Vendor = 0x00D0D5
+	VendorPioneer       Vendor = 0x00E036
+	VendorLg            Vendor = 0x00E091
+	VendorSharp         Vendor = 0x08001F
+	VendorSony          Vendor = 0x080046
+	VendorBroadcom      Vendor = 0x18C086
+	VendorSharp2        Vendor = 0x534850
+	VendorVizio         Vendor = 0x6B746D
+	VendorBenq          Vendor = 0x8065E9
+	VendorHarmanKardon  Vendor = 0x9C645E
+	VendorUnknown       Vendor = 0
+)
+
+func (vendor Vendor) String() string {
+	C.libcec_vendor_id_to_string(C.cec_vendor_id(vendor), toString, toStringSize)
+
+	return C.GoString(toString)
+}
+//endregion

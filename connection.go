@@ -75,6 +75,11 @@ func (conn *Connection) GetPhysicalAddress(address LogicalAddress) PhysicalAddre
 	return PhysicalAddress{byte(physical >> 8), byte(physical & 0xFF)}
 }
 
+func (conn *Connection) GetVendor(address LogicalAddress) Vendor {
+	vendor := C.libcec_get_device_vendor_id(conn.connection, C.cec_logical_address(address))
+	return Vendor(vendor)
+}
+
 func (conn *Connection) Transmit(message Message) {
 	var command C.cec_command
 
