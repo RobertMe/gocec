@@ -10,6 +10,7 @@ import "C"
 
 import (
 	"errors"
+	"unsafe"
 )
 
 type Connection struct {
@@ -78,6 +79,12 @@ func (conn *Connection) GetPhysicalAddress(address LogicalAddress) PhysicalAddre
 func (conn *Connection) GetVendor(address LogicalAddress) Vendor {
 	vendor := C.libcec_get_device_vendor_id(conn.connection, C.cec_logical_address(address))
 	return Vendor(vendor)
+}
+
+func (conn *Connection) GetOSDName(address LogicalAddress) string {
+	name := C.cec_osd_name{}
+	C.libcec_get_device_osd_name(conn.connection, C.cec_logical_address(address), (*C.char)(unsafe.Pointer(&name[0])))
+	return C.GoString((*C.char)(unsafe.Pointer(&name[0])))
 }
 
 func (conn *Connection) Transmit(message Message) {
