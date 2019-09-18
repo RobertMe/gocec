@@ -54,6 +54,14 @@ func (conn *Connection) Open(adapter Adapter) error {
 	return nil
 }
 
+func (conn *Connection) GetAdapterAddress() (LogicalAddress, error) {
+	addresses := C.libcec_get_logical_addresses(conn.connection)
+	if addresses.addresses[addresses.primary] == 0 {
+		return DeviceUnregistered, errors.New("unable to determine logical address of the CEC adapter")
+	}
+	return LogicalAddress(addresses.primary), nil
+}
+
 func (conn *Connection) ActiveDevices() []LogicalAddress {
 	activeDevices := C.libcec_get_active_devices(conn.connection)
 
