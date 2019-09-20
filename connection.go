@@ -2,8 +2,7 @@ package gocec
 
 /*
 #cgo pkg-config: libcec
-//#cgo CFLAGS: -Iinclude
-//#cgo LDFLAGS: -lcec
+#cgo LDFLAGS: -Wl,-rpath=/opt/vc/lib
 #include <libcec/cecc.h>
 */
 import "C"
