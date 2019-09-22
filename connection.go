@@ -94,6 +94,14 @@ func (conn *Connection) GetOSDName(address LogicalAddress) string {
 	return C.GoString((*C.char)(unsafe.Pointer(&name[0])))
 }
 
+func (conn *Connection) PowerOnDevice(address LogicalAddress) {
+	C.libcec_power_on_devices(conn.connection, C.cec_logical_address(address))
+}
+
+func (conn *Connection) StandByDevice(address LogicalAddress) {
+	C.libcec_standby_devices(conn.connection, C.cec_logical_address(address))
+}
+
 func (conn *Connection) Transmit(message Message) {
 	var command C.cec_command
 
