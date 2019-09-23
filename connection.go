@@ -102,6 +102,10 @@ func (conn *Connection) StandByDevice(address LogicalAddress) {
 	C.libcec_standby_devices(conn.connection, C.cec_logical_address(address))
 }
 
+func (conn *Connection) GetActiveSource() LogicalAddress {
+	return LogicalAddress(C.libcec_get_active_source(conn.connection))
+}
+
 func (conn *Connection) Transmit(message Message) {
 	var command C.cec_command
 

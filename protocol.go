@@ -38,6 +38,7 @@ const (
 	DeviceFreeUse
 	DeviceUnregistered
 	DeviceBroadcast LogicalAddress = 15
+	DeviceUnknown   LogicalAddress = 0xFF
 )
 
 func (address LogicalAddress) String() string {
