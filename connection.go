@@ -35,8 +35,8 @@ func (conn *Connection) FindAdapters() []Adapter {
 	adapters := make([]Adapter, count)
 	for i := 0; i < count; i++ {
 		adapters[i] = Adapter{
-			Path: C.GoStringN(&foundDevices[i].path[0], 1024),
-			Comm: C.GoStringN(&foundDevices[i].comm[0], 1024),
+			Path: C.GoString(&foundDevices[i].path[0]),
+			Comm: C.GoString(&foundDevices[i].comm[0]),
 		}
 	}
 
