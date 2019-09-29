@@ -19,6 +19,15 @@ func ParseMessage(message string) (Message, error) {
 	return Message(command), nil
 }
 
+func NewMessage(source LogicalAddress, destination LogicalAddress, opcode Opcode, parameters []byte) Message{
+	message := Message{
+		(byte(source) << 4) + byte(destination),
+		byte(opcode),
+	}
+	message = append(message, parameters...)
+	return message
+}
+
 func (message Message) Source() LogicalAddress {
 	return LogicalAddress(message[0] >> 4)
 }
