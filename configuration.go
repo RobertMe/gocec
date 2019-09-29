@@ -18,6 +18,7 @@ type Configuration struct {
 
 func NewConfiguration(deviceName string, activateSource bool) (config *Configuration) {
 	config = &Configuration{}
+	C.libcec_clear_configuration(&config.configuration)
 	config.configuration.clientVersion = C.LIBCEC_VERSION_CURRENT
 	C.setDeviceName(&config.configuration, C.CString(deviceName))
 	config.configuration.deviceTypes.types[0] = C.CEC_DEVICE_TYPE_RECORDING_DEVICE
